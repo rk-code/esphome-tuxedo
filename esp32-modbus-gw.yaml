@@ -2,7 +2,7 @@
 # Definition: definitions/boards/generic-esp32s3/manifest.yaml
 #
 #   MASTER     UART 1         UART2       SLAVE
-#      |   REQ-->|              |--REQ-->   | 
+#      |   REQ-->|              |--REQ-->   |
 #      |         |              |           |
 #      |         |              | <--RESP-- |
 #      |<--RESP--|   <--RESP----|           |
@@ -23,7 +23,7 @@ logger:
 api:
   encryption:
     key: "CwWzy8Pk9e1iB3Fih6Ctmrt5u7Wycx9vnNVYpKwiR/0="
-    
+
 ota:
   - platform: esphome
     encryption:
@@ -53,7 +53,7 @@ number:
             # REQUEST: slave=0x21 FC01 start=0x0000 quantity=6
             # HEX: 21.01.00.00.00.06.BB.68
             data: [0x21, 0x01, 0x00, 0x00, 0x00, 0x06, 0xbb, 0x68]
-    
+
 uart:
   - id: uart_1
     baud_rate: 9600
@@ -70,7 +70,7 @@ uart:
       sequence:
         - lambda: |-
             actions::master(bytes);
-        
+
   - id: uart_2
     baud_rate: 9600
     rx_pin: GPIO11
@@ -80,7 +80,7 @@ uart:
       direction: RX
       dummy_receiver: true
       debug_prefix: "[UART_2]"
-      after: 
+      after:
         timeout: 4ms
       sequence:
         - lambda: |-
@@ -88,4 +88,3 @@ uart:
                    format_hex_pretty(bytes).c_str());
 
 ...
-
