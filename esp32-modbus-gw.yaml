@@ -1,9 +1,17 @@
 # Board: Generic ESP32-S3 Board (Generic)
 # Definition: definitions/boards/generic-esp32s3/manifest.yaml
+#
+#   MASTER     UART 1         UART2       SLAVE
+#      |   REQ-->|              |--REQ-->   | 
+#      |         |              |           |
+#      |         |              | <--RESP-- |
+#      |<--RESP--|   <--RESP----|           |
+#
 
 esphome:
-  name: esp32-modbus-gw
-  friendly_name: ESP32 Modbus GW
+  name: esp32-modbus-wp
+  friendly_name: ESP32_Modbus_WP
+  includes: modbus_crc.h
 
 esp32:
   variant: esp32s3
@@ -14,16 +22,88 @@ logger:
 
 api:
   encryption:
-    key: "0tALkHxr1M29OhaB1OhFx1p6Fsd69vnz8NXTRO6kl04="
-
+    key: "CwWzy8Pk9e1iB3Fih6Ctmrt5u7Wycx9vnNVYpKwiR/0="
+    
 ota:
   - platform: esphome
+    encryption:
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   ap:
-    ssid: ESP32 Modbus GW Fallback Hotspot
-    password: "xRUkCvxAdUf6"
+    ssid: ESP32_Modbus_WP Fallback Hotspot
+    password: "aAAKPM27a8vQ"
 
 captive_portal:
+
+number:
+  - platform: template
+    id: value
+    name: "uart_value"
+    mode: SLIDER
+    min_value: 0
+    max_value: 255
+    step: 1
+    optimistic: true
+    on_value:
+      then:
+        - uart.write:
+            id: uart_2
+            # REQUEST: slave=0x21 FC01 start=0x0000 quantity=6
+            # HEX: 21.01.00.00.00.06.BB.68
+            data: [0x21, 0x01, 0x00, 0x00, 0x00, 0x06, 0xbb, 0x68]
+    
+uart:
+  - id: uart_1
+    baud_rate: 9600
+    rx_pin: GPIO8
+    tx_pin: GPIO9
+    flow_control_pin:
+      number: GPIO10
+    debug:
+      direction: RX
+      dummy_receiver: true
+      debug_prefix: "[UART_1]"
+      after:
+        timeout: 4ms
+      sequence:
+        - lambda: |-
+            static std::vector<uint8_t> buffer;
+            // Neue Bytes an den Puffer anhängen
+            for (auto byte : bytes) {
+              buffer.push_back(byte);
+            }
+            ESP_LOGI("MASTER", "RX: %s", format_hex_pretty(bytes).c_str());
+            if (buffer.size() >= 8) {
+              // check crc
+              uint16_t calc = modbus_crc16(buffer.data(), 6);
+              if (calc == ((buffer.at(7) << 8) + buffer.at(6))) {
+                // crc ok
+                // forward to SLAVE
+                // uart_2 !!! uart_1 only for dev
+                id(uart_1).write_array(buffer.data(), 8); 
+                buffer.erase(buffer.begin(), buffer.begin() + 8);
+              } else {
+                ESP_LOGI("[MASTER]", "wrong CRC");
+              }
+            }
+        
+  - id: uart_2
+    baud_rate: 9600
+    rx_pin: GPIO11
+    tx_pin: GPIO12
+    flow_control_pin: GPIO13
+    debug:
+      direction: RX
+      dummy_receiver: true
+      debug_prefix: "[UART_2]"
+      after: 
+        timeout: 4ms
+      sequence:
+        - lambda: |-
+            ESP_LOGI("SLAVE", "RX: %s",
+                   format_hex_pretty(bytes).c_str());
+
+...
+
