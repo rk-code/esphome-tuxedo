@@ -2,10 +2,10 @@
 # Definition: definitions/boards/generic-esp32s3/manifest.yaml
 #
 #   MASTER     UART 1         UART2       SLAVE
-#      |   REQ-->|              |--REQ-->   |
-#      |         |              |           |
+#      | --REQ-->|              |           |
+#      |         |              | --REQ-->  | 
 #      |         |              | <--RESP-- |
-#      |<--RESP--|   <--RESP----|           |
+#      |<--RESP--|              |           |
 #
 
 esphome:
@@ -54,6 +54,10 @@ number:
             # HEX: 21.01.00.00.00.06.BB.68
             data: [0x21, 0x01, 0x00, 0x00, 0x00, 0x06, 0xbb, 0x68]
 
+globals:
+  - id: master_req # store request from modbus master
+    type: std::vector<unit8_t>
+            
 uart:
   - id: uart_1
     baud_rate: 9600
