@@ -11,7 +11,7 @@
 esphome:
   name: esp32-modbus-wp
   friendly_name: ESP32_Modbus_WP
-  includes: [modbus_crc.h, uart_actions.cpp]
+  includes: [modbus_crc.h, uart_actions.h]
 
 esp32:
   variant: esp32s3
