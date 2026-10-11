@@ -66,7 +66,7 @@ uart:
       dummy_receiver: true
       debug_prefix: "[UART_1]"
       after:
-        bytes: 2B
+        bytes: 3
       sequence:
         - lambda: |-
             actions::master(bytes);
