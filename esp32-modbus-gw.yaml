@@ -11,7 +11,7 @@
 esphome:
   name: esp32-modbus-wp
   friendly_name: ESP32_Modbus_WP
-  includes: modbus_crc.h
+  includes: [modbus_crc.h, uart_actions.cpp]
 
 esp32:
   variant: esp32s3
@@ -69,25 +69,7 @@ uart:
         timeout: 4ms
       sequence:
         - lambda: |-
-            static std::vector<uint8_t> buffer;
-            // Neue Bytes an den Puffer anhängen
-            for (auto byte : bytes) {
-              buffer.push_back(byte);
-            }
-            ESP_LOGI("MASTER", "RX: %s", format_hex_pretty(bytes).c_str());
-            if (buffer.size() >= 8) {
-              // check crc
-              uint16_t calc = modbus_crc16(buffer.data(), 6);
-              if (calc == ((buffer.at(7) << 8) + buffer.at(6))) {
-                // crc ok
-                // forward to SLAVE
-                // uart_2 !!! uart_1 only for dev
-                id(uart_1).write_array(buffer.data(), 8); 
-                buffer.erase(buffer.begin(), buffer.begin() + 8);
-              } else {
-                ESP_LOGI("[MASTER]", "wrong CRC");
-              }
-            }
+            actions::master(bytes);
         
   - id: uart_2
     baud_rate: 9600
