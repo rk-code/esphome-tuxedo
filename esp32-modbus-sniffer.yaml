@@ -67,6 +67,14 @@ sensor:
     accuracy_decimals: 1
 
   - platform: template
+    id: lg_hk1_vorlauf
+    name: "LG Heizkreis 1 Vorlauf"
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: template
     id: lg_hk2_vorlauf
     name: "LG Heizkreis 2 Vorlauf"
     unit_of_measurement: "°C"
