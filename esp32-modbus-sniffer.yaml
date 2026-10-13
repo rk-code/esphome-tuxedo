@@ -4,7 +4,6 @@
 esphome:
   name: esp32-modbus-sniffer
   friendly_name: esp32-modbus-sniffer
-  includes: [modbus_crc.h, sniffer_lambda.h]
 
 esp32:
   variant: esp32s3
