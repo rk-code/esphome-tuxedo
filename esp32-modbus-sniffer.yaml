@@ -137,5 +137,4 @@ uart:
       timeout: 20ms
 
     sequence:
-      - lambda: |-
-          actions::lambda(bytes);
+      - lambda: !include sniffer_lambda.h
