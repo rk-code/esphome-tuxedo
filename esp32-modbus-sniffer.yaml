@@ -35,16 +35,16 @@ sensor:
   # ============================================================
 
   - platform: template
-    id: lg_wasser_ruecklauf
-    name: "LG Wasser Rücklauf"
+    id: lg_wasser_einlass_temp
+    name: "LG Wasser Einlauss"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 1
 
   - platform: template
-    id: lg_wasser_vorlauf
-    name: "LG Wasser Vorlauf"
+    id: lg_wasser_auslass_temp
+    name: "LG Wasser Auslass"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
