@@ -36,7 +36,7 @@ sensor:
 
   - platform: template
     id: lg_wasser_einlass_temp
-    name: "LG Wasser Einlauss"
+    name: "LG Wasser Einlass"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
@@ -60,7 +60,7 @@ sensor:
 
   - platform: template
     id: lg_hk1_vorlauf
-    name: "LG Heizkreis 1 Vorlauf"
+    name: "LG HK 1 Vorlauf"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
@@ -68,7 +68,7 @@ sensor:
 
   - platform: template
     id: lg_hk1_raumtemperatur
-    name: "LG Heizkreis 1 Raumtemperatur"
+    name: "LG HK 1 Raumtemperatur"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
@@ -76,15 +76,16 @@ sensor:
 
   - platform: template
     id: lg_hk2_vorlauf
-    name: "LG Heizkreis 2 Vorlauf"
+    name: "LG HK 2 Vorlauf"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
     accuracy_decimals: 1
+    update_interval: 10s
 
   - platform: template
     id: lg_hk2_raumtemperatur
-    name: "LG Heizkreis 2 Raumtemperatur"
+    name: "LG HK 2 Raumtemperatur"
     unit_of_measurement: "°C"
     device_class: temperature
     state_class: measurement
