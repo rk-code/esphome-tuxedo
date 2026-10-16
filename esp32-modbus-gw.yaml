@@ -19,9 +19,9 @@ esp32:
   framework:
     type: esp-idf
 
-psram:
-  mode: quad
-  speed: 80MHz
+# psram:
+#   mode: quad
+#   speed: 80MHz
 
 logger:
 
