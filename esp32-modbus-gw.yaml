@@ -42,8 +42,11 @@ wifi:
 
 captive_portal:
 
+debug:
+  update_interval: 5s
+
 sensor:
-  - platform: template
+  - platform: debug
     cpu_frequency:
       name: "CPU Frequency"
 
