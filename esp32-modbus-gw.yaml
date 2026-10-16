@@ -3,7 +3,7 @@
 #
 #   MASTER     UART 1         UART2       SLAVE
 #      | --REQ-->|              |           |
-#      |         |              | --REQ-->  | 
+#      |         |              | --REQ-->  |
 #      |         |              | <--RESP-- |
 #      |<--RESP--|              |           |
 #
@@ -56,8 +56,8 @@ number:
 
 globals:
   - id: master_req # store request from modbus master
-    type: std::vector<unit8_t>
-            
+    type: std::vector<uint8_t>
+
 uart:
   - id: uart_1
     baud_rate: 9600
