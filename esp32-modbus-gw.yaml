@@ -30,7 +30,7 @@ api:
     key: "CwWzy8Pk9e1iB3Fih6Ctmrt5u7Wycx9vnNVYpKwiR/0="
 
 ota:
-  - platform: esphome
+  - platform: esphome debug
     encryption:
 
 wifi:
