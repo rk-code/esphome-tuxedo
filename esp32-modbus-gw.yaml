@@ -15,10 +15,13 @@ esphome:
 
 esp32:
   variant: esp32s3
+#  cpu_frequency: 160MHz
   framework:
     type: esp-idf
-    advanced:
-          sram1_as_iram: true
+
+psram:
+  mode: quad
+  speed: 80MHz
 
 logger:
 
@@ -38,6 +41,11 @@ wifi:
     password: "aAAKPM27a8vQ"
 
 captive_portal:
+
+sensor:
+  - platform: debug
+    cpu_frequency:
+      name: "CPU Frequency"
 
 number:
   - platform: template
