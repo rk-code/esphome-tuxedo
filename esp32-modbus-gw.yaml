@@ -30,7 +30,7 @@ api:
     key: "CwWzy8Pk9e1iB3Fih6Ctmrt5u7Wycx9vnNVYpKwiR/0="
 
 ota:
-  - platform: esphome debug
+  - platform: esphome
     encryption:
 
 wifi:
@@ -43,7 +43,7 @@ wifi:
 captive_portal:
 
 sensor:
-  - platform: debug
+  - platform: template
     cpu_frequency:
       name: "CPU Frequency"
 
