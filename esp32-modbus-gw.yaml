@@ -68,6 +68,7 @@ number:
             data: [0x21, 0x01, 0x00, 0x00, 0x00, 0x06, 0xbb, 0x68]
   - platform: template
     id: LGV_input
+    name: LGV_input
     type: uint16_t[512]
 
 globals:
