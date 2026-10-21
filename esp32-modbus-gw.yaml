@@ -70,6 +70,16 @@ number:
 globals:
   - id: master_req # store request from modbus master
     type: std::vector<uint8_t>
+  - id: LGV_coil
+    type: uint16_t
+  - id: LGV_discrete
+    type: uint16_t
+  - id: LGV_input
+    type: uint16_t[45]
+    addr: uint16 = 0
+  - id: LGV_hold
+    type: uint16_t[25]
+    addr: uint16 = 0
 
 uart:
   - id: uart_1
