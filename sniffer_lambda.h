@@ -1,3 +1,4 @@
+#include <cstdint>
 |-
   static std::vector<uint8_t> buffer;
   // Neue Bytes an den Puffer anhängen
@@ -370,6 +371,15 @@
               power
           );
           id(sdm72_gesamtleistung).publish_state(power);
+          //
+          uint8_t cmd[8] = {0x21, 0x01, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00 };
+          uint16_t crc =  crc16(cmd,6);
+          cmd[6] = crc & 0x00ff;
+          cmd[7] = 0x00ff & (crc >> 8);
+          ESP_LOGI("CMD", "%02X %02X %02X %02X %02X %02X %02X %02X  crc=%04X",
+            cmd[0], cmd[1], cmd[2], cmd[3], cmd[4], cmd[5], cmd[6], cmd[7], crc);
+          id(modbus_uart).write_array(cmd, 8);
+
         }
       }
     }
